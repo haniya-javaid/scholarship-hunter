@@ -4,12 +4,15 @@ import docx
 from pathlib import Path
 from dotenv import load_dotenv
 from tavily import TavilyClient
-from mistralai import Mistral as MistralClient
+from mistralai import Mistral
+import streamlit as st
 
+# Local development ke liye
 load_dotenv(Path(__file__).parent.parent / ".env")
 
-TAVILY_API_KEY = os.getenv("TAVILY_API_KEY")
-MISTRAL_API_KEY = os.getenv("MISTRAL_API_KEY")
+# Local .env ya Streamlit secrets dono support
+TAVILY_API_KEY = os.getenv("TAVILY_API_KEY") or st.secrets.get("TAVILY_API_KEY")
+MISTRAL_API_KEY = os.getenv("MISTRAL_API_KEY") or st.secrets.get("MISTRAL_API_KEY")
 
 def extract_text_from_cv(uploaded_file) -> str:
     file_bytes = uploaded_file.read()
