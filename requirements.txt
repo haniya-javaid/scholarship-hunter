@@ -1,0 +1,6 @@
+streamlit
+tavily-python
+mistralai
+python-dotenv
+pymupdf
+python-docx
