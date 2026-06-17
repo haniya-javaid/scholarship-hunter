@@ -13,7 +13,7 @@ import fitz
 from pathlib import Path
 from dotenv import load_dotenv
 from tavily import TavilyClient
-from mistralai.client import MistralClient as Mistral
+from mistralai import Mistral
 
 # Local development ke liye
 load_dotenv(Path(__file__).parent.parent / ".env")
