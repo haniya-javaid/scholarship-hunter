@@ -3,3 +3,4 @@ mistralai
 tavily-python
 python-dotenv
 pymupdf
+python-docx
