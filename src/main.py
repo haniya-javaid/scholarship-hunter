@@ -1,11 +1,19 @@
 import os
+import streamlit as st
+
+# ---- DOCX PACKAGE CHECK & FORCE INSTALL ----
+try:
+    import docx
+except ImportError:
+    import os
+    os.system('pip install python-docx')
+    import docx
+
 import fitz
-import docx
 from pathlib import Path
 from dotenv import load_dotenv
 from tavily import TavilyClient
 from mistralai import Mistral
-import streamlit as st
 
 # Local development ke liye
 load_dotenv(Path(__file__).parent.parent / ".env")
@@ -35,7 +43,8 @@ def extract_text_from_cv(uploaded_file) -> str:
         raise ValueError("Sirf PDF ya DOCX upload karein!")
 
 def analyze_cv(cv_text: str) -> dict:
-    client = MistralClient(api_key=MISTRAL_API_KEY)
+    # UPDATED: MistralClient ki jagah naya Mistral use kiya hai
+    client = Mistral(api_key=MISTRAL_API_KEY)
     
     response = client.chat.complete(
         model="mistral-small-latest",
@@ -78,7 +87,8 @@ def search_scholarships(query: str) -> str:
     return combined
 
 def summarize_with_mistral(raw_data: str, user_query: str) -> str:
-    client = MistralClient(api_key=MISTRAL_API_KEY)
+    # UPDATED: MistralClient ki jagah naya Mistral use kiya hai
+    client = Mistral(api_key=MISTRAL_API_KEY)
     
     response = client.chat.complete(
         model="mistral-small-latest",
@@ -118,5 +128,5 @@ def find_scholarships_by_cv(uploaded_file) -> tuple:
     return cv_info, results
 
 if __name__ == "__main__":
-    result = find_scholarships("fully funded scholarships for Pakistani students 2025")
+    result = find_scholarships("fully funded scholarships for Pakistani students 2026")
     print(result)
